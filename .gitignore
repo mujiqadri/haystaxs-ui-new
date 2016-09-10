@@ -1,0 +1,4 @@
+venv_haystaxs/
+.idea/
+desktop.ini
+webapp/static/vendor/

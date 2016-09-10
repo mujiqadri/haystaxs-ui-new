@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<link href="{{ url_for('static', filename='stylesheets/style.css') }}" media="screen, projection" rel="stylesheet" type="text/css"/>
+	<!--<link href="{{ url_for('static', filename='stylesheets/print.css') }}" media="print" rel="stylesheet" type="text/css"/>-->
+	<!--[if IE]>
+	<link href="/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css"/>
+	<![endif]-->
+	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon-hs.ico') }}">
+
+	<title>{{pg_title}}</title>
+</head>
+<body>
+<div class="main ui container fluid haystaxs">
+	<div class="top fluid left floated"><a class="logo" href="{{ url_for('pp.index') }}"></a>
+		<div class="right floated">
+			<nav class="left floated"><a href="" class="active">Dashboard</a> <a href="">View</a> <a href="">Analyze</a>
+				<a href="">Visualize</a></nav>
+			<div class="default-cluster left floated">
+				<label class="left floated" style="color: #7fff00">Active Cluster</label>
+				<select class="ui dropdown left floated">
+					<option>Cluster 01</option>
+					<option>Cluster 02</option>
+					<option>Cluster 03</option>
+					<option>Cluster 04</option>
+					<option>Cluster 05</option>
+					<option>Cluster 06</option>
+				</select>
+				<a href="" class="button add left floated"></a> <a href="" class="button refresh left floated"></a>
+			</div>
+			<div class="user-nav left floated"><a href="" class="sign-in hide">Sign In</a>
+				<div class="user"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/sauro/128.jpg">
+					<div class="name">{{ current_user.email_address }}</div>
+					<div class="dropdown">
+						<ul>
+							<li class="item notifications"><a href="">Notifications <i class="count">10</i></a></li>
+							<li class="item settings"><a href="">Settings</a></li>
+							<li class="item logout"><a href="{{ url_for('pp.logout') }}">Logout</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% block page_main_filter %}{% endblock %}
+	{% block page_content %}{% endblock %}
+	<footer class="clearfix"> Copyright &copy; 2016 Haystaxs</footer>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='javascripts/semantic.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='javascripts/haystaxs.js') }}"></script>
+{% block page_js %}
+{% endblock %}
+</body>
+</html>
