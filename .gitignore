@@ -1,4 +1,6 @@
 venv_haystaxs/
 .idea/
 desktop.ini
-webapp/static/vendor/
+webapp/static/vendor/amcharts
+webapp/static/vendor/jquery.powertip-1.2.0/examples
+webapp/static/vendor/jquery.powertip-1.2.0/LICENSE.txt

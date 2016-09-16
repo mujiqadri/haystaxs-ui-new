@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.css">
 	<link href="{{ url_for('static', filename='stylesheets/style.css') }}" media="screen, projection" rel="stylesheet" type="text/css"/>
 	<!--<link href="{{ url_for('static', filename='stylesheets/print.css') }}" media="print" rel="stylesheet" type="text/css"/>-->
 	<!--[if IE]>
@@ -20,13 +21,10 @@
 				<a href="">Visualize</a></nav>
 			<div class="default-cluster left floated">
 				<label class="left floated" style="color: #7fff00">Active Cluster</label>
-				<select class="ui dropdown left floated">
-					<option>Cluster 01</option>
-					<option>Cluster 02</option>
-					<option>Cluster 03</option>
-					<option>Cluster 04</option>
-					<option>Cluster 05</option>
-					<option>Cluster 06</option>
+				<select class="ui dropdown left floated" id="active-cluster">
+					{% for c in user_clusters %}
+					<option value="{{ c.cluster_id }}" {% if session['active_cluster_id']|int == c.cluster_id %}selected{% endif %}>{{ c.friendly_name }}</option>
+					{% endfor %}
 				</select>
 				<a href="" class="button add left floated"></a> <a href="" class="button refresh left floated"></a>
 			</div>
@@ -48,10 +46,115 @@
 	{% block page_content %}{% endblock %}
 	<footer class="clearfix"> Copyright &copy; 2016 Haystaxs</footer>
 </div>
+<div class="ui basic modal" id="change-active-cluster-modal">
+	<!--<i class="close icon"></i>-->
+	<div class="header">
+		Change Active Cluster
+	</div>
+	<div class="content">
+		<p id="change-active-cluster-question"></p>
+	</div>
+	<div class="actions">
+		<div class="two fluid ui inverted buttons">
+			<div class="ui cancel red basic inverted button">
+				<i class="remove icon"></i>
+				No
+			</div>
+			<div class="ui ok green basic inverted button">
+				<i class="checkmark icon"></i>
+				Yes
+			</div>
+		</div>
+	</div>
+</div>
 
-<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='javascripts/semantic.min.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='javascripts/haystaxs.js') }}"></script>
+<!--<script src="https://code.jquery.com/jquery-1.10.2.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.js"></script>
+<script src="{{ url_for('static', filename='vendor/jquery-blockUI/jquery.blockUI.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='vendor/moment.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='vendor/bootbox.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='javascripts/semantic.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='javascripts/haystaxs.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+	function loadViaAjax(url, data, dataType, resultTargetEl, blockTargetEl, async, successCallback, failureCallback, httpMethod) {
+		var result = {};
+
+		blockTargetEl = blockTargetEl || resultTargetEl;
+
+		if (blockTargetEl) {
+			blockUI(blockTargetEl);
+		}
+
+		$.ajax({
+			type: httpMethod ? httpMethod : "GET",
+			cache: false,
+			url: url,
+			data: data,
+			dataType: dataType ? dataType : "html",
+			async: (async === false) ? async : true,
+			success: function (res) {
+				if (blockTargetEl) {
+					unBlockUI(blockTargetEl);
+				}
+				if (resultTargetEl) {
+					resultTargetEl.html(res);
+				}
+
+				if (dataType === "json") {
+					result = res;
+				}
+
+				if (successCallback) {
+					successCallback(res);
+				}
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				var msg = 'Error on reloading the content. Please check your connection and try again.';
+
+				if (blockTargetEl) {
+					unBlockUI(blockTargetEl);
+				}
+				if (resultTargetEl) {
+					resultTargetEl.html(msg);
+				}
+
+				if (failureCallback) {
+					failureCallback(xhr, thrownError);
+				}
+
+				console.log(xhr.responseText);
+			}
+		});
+
+		return result;
+	}
+</script>
+<script type="text/javascript">
+	var ACTIVE_CLUSTER_ID = parseInt("{{ session['active_cluster_id'] }}"); // parseInt used just to satisfy pyCharm code formatting :P
+	var proposed_cluster_id = ACTIVE_CLUSTER_ID;
+
+	$('#change-active-cluster-modal').modal({
+		closable: false,
+		onApprove: function () {
+			loadViaAjax("{{ url_for('pp.change_active_cluster') }}", {cluster_id: proposed_cluster_id}, "html", null, null, null,
+					function () {
+						window.location.reload();
+					});
+		},
+		onDeny: function () {
+			$('#active-cluster').dropdown('set selected', ACTIVE_CLUSTER_ID);
+		}
+	});
+
+	$('#active-cluster').on('change', function (e) {
+		var selectedClusterName = $('#active-cluster option:selected').text();
+		proposed_cluster_id = $(this).val();
+
+		$('#change-active-cluster-question').text('Change the active cluster to ' + selectedClusterName + ' ?');
+		$('#change-active-cluster-modal').modal('show');
+	});
+</script>
 {% block page_js %}
 {% endblock %}
 </body>

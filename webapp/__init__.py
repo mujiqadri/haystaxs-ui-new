@@ -21,11 +21,13 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(theapp)
 
 from . import pp_blueprint
+from . import api_blueprint
 
 ###############################
 ### Register Blueprints     ###
 ###############################
-theapp.register_blueprint(pp_blueprint.publicportal_bp)
+theapp.register_blueprint(pp_blueprint._ppbp)
+theapp.register_blueprint(api_blueprint._apibp)
 
 login_manager.login_view = 'pp.login'
 
