@@ -17,8 +17,15 @@ def before_request():
 @login_required
 def dashboard():
     return render_template('pp/dashboard.html', pg_title='Dashboard',
-                           user_clusters=g.user_clusters, db_names=cds.get_db_names(),
+                           db_names=cds.get_db_names(),
                            user_names=cds.get_user_names())
+
+
+@_ppbp.route('/visualize/<workload_id>')
+def visualize(workload_id):
+    # workload_json = hds.get_workload_json(54)
+    return render_template('pp/visualizer.html', pg_title='Visualizer',
+                           active_workload_id=workload_id)
 
 
 @_ppbp.route('/login', methods=['GET', 'POST'])

@@ -7,7 +7,7 @@ class _ConfigBase:
     ### Custom Configs          ###
     ###############################
     # This config is used specifically by flask_sqlalchemy
-    SQLALCHEMY_DATABASE_URI = 'postgresql://gpadmin:S3cr3t!@24.150.86.245:5432/haystack'
+    SQLALCHEMY_DATABASE_URI = ''
     HAYSTACK_SCHEMA = 'haystack_ui'
     CLUSTER_DATA_SCHEMA = 'cluster_dot_admin_at_haystaxs_dot_com'
     USER_SCHEMA = 'cluster_dot_admin_at_haystaxs_dot_com'

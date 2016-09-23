@@ -29,3 +29,11 @@ def get_default_cluster_id(user_id):
     query = db.session.query(ClusterUser.cluster_id). \
         filter(and_(ClusterUser.user_id == user_id, ClusterUser.is_default == True))
     return query.scalar()
+
+def get_workload_json(workload_id):
+    with get_connection_hs_schema() as conn:
+        sql = "select workload_json from workloads_json where workload_id = {0}".format(workload_id)
+        cursor = conn.execute(sql)
+        result = cursor.fetchone()[0]
+
+    return result

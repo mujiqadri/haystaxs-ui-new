@@ -35,7 +35,7 @@ def pluralize_collection(base, local_cls, referred_cls, constraint):
 ######################################
 ### Configure Metadata and Automap ###
 ######################################
-tables_to_reflect = ['users', 'cluster', 'cluster_users']
+tables_to_reflect = ['users', 'cluster', 'cluster_users', 'workloads_json', 'workloads']
 
 # db.engine.echo = False
 db.metadata.bind = db.engine
@@ -59,7 +59,6 @@ class Cluster(am_base):
 
 class ClusterUser(am_base):
     __tablename__ = 'cluster_users'
-
 
 # class WlTable(am_base):
 #     __tablename__ = 'wl_table'

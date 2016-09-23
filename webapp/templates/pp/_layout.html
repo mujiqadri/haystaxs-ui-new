@@ -5,7 +5,8 @@
 	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.css">
 	<link href="{{ url_for('static', filename='stylesheets/style.css') }}" media="screen, projection" rel="stylesheet" type="text/css"/>
-	<!--<link href="{{ url_for('static', filename='stylesheets/print.css') }}" media="print" rel="stylesheet" type="text/css"/>-->
+	{% block page_css %}
+	{% endblock %}
 	<!--[if IE]>
 	<link href="/stylesheets/ie.css" media="screen, projection" rel="stylesheet" type="text/css"/>
 	<![endif]-->
@@ -18,11 +19,11 @@
 	<div class="top fluid left floated"><a class="logo" href="{{ url_for('pp.index') }}"></a>
 		<div class="right floated">
 			<nav class="left floated"><a href="" class="active">Dashboard</a> <a href="">View</a> <a href="">Analyze</a>
-				<a href="">Visualize</a></nav>
+				<a href="{{ url_for('pp.visualize', workload_id=54) }}">Visualize</a></nav>
 			<div class="default-cluster left floated">
 				<label class="left floated" style="color: #7fff00">Active Cluster</label>
 				<select class="ui dropdown left floated" id="active-cluster">
-					{% for c in user_clusters %}
+					{% for c in g.user_clusters %}
 					<option value="{{ c.cluster_id }}" {% if session['active_cluster_id']|int == c.cluster_id %}selected{% endif %}>{{ c.friendly_name }}</option>
 					{% endfor %}
 				</select>
@@ -130,12 +131,12 @@
 </script>
 <script type="text/javascript">
 	var ACTIVE_CLUSTER_ID = parseInt("{{ session['active_cluster_id'] }}"); // parseInt used just to satisfy pyCharm code formatting :P
-	var proposed_cluster_id = ACTIVE_CLUSTER_ID;
+	var selected_cluster_id = ACTIVE_CLUSTER_ID;
 
 	$('#change-active-cluster-modal').modal({
 		closable: false,
 		onApprove: function () {
-			loadViaAjax("{{ url_for('pp.change_active_cluster') }}", {cluster_id: proposed_cluster_id}, "html", null, null, null,
+			loadViaAjax("{{ url_for('pp.change_active_cluster') }}", {cluster_id: selected_cluster_id}, "html", null, null, null,
 					function () {
 						window.location.reload();
 					});
@@ -147,7 +148,7 @@
 
 	$('#active-cluster').on('change', function (e) {
 		var selectedClusterName = $('#active-cluster option:selected').text();
-		proposed_cluster_id = $(this).val();
+		selected_cluster_id = $(this).val();
 
 		$('#change-active-cluster-question').text('Change the active cluster to ' + selectedClusterName + ' ?');
 		$('#change-active-cluster-modal').modal('show');

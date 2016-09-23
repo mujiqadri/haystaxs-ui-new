@@ -1,7 +1,5 @@
-from flask import Blueprint, request, render_template, redirect, url_for, flash, jsonify
-from flask_login import login_user, login_required, logout_user
-from webapp import db
-from .db_models import User
+from flask import Blueprint, jsonify
+from webapp.data_services import haystaxs as hds
 
 _apibp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -33,3 +31,7 @@ def dashboard_hourly_chart_data():
          {"queryType": "SELECT", "hour": 12, "duration": 7.0}, {"queryType": "INSERT SELECT", "hour": 15, "duration": 87.0},
          {"queryType": "INSERT SELECT", "hour": 18, "duration": 136.0}, {"queryType": "SELECT", "hour": 21, "duration": 1.0},
          {"queryType": "INSERT SELECT", "hour": 23, "duration": 102.0}, {"queryType": "UNRESOLVED", "hour": 23, "duration": 2.0}])
+
+@_apibp.route('/workload-json/<workload_id>')
+def workload_json(workload_id):
+    return hds.get_workload_json(workload_id)
