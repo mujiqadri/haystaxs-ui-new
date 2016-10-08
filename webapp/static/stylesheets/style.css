@@ -1,23 +1,4 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font: inherit;
-  font-size: 100%;
-  vertical-align: baseline;
-}
+
 
 html {
   line-height: 1;
@@ -1302,3 +1283,107 @@ h1[class="page title"] {
 .icon[class*="red"] {
   color: #ff4d4d;
 }
+
+.haystaxs .page.sidebar > .container .head {
+    -moz-border-radius: 3px 3px 0 0;
+    -webkit-border-radius: 3px;
+    border-radius: 3px 3px 0 0;
+    padding: 8px 12px;
+ }
+
+ .haystaxs .page.sidebar > .container .head h3 {
+    font-size: 15px;
+    font-size: 0.9375rem;
+    font-weight: 900;
+}
+
+.ui.table thead th {
+    cursor: auto;
+    background: #f4f1ea;
+    text-align: inherit;
+    color: rgba(0,0,0,.87);
+    padding: .9375em .8125em;
+    vertical-align: inherit;
+    font-style: none;
+    font-weight: 700;
+    text-transform: none;
+    border-bottom: 1px solid rgba(34,36,38,.1);
+    border-left: none;
+}
+.ui.table th, .ui.table td {
+    padding: 8px !important;
+}
+
+.haystaxs .ui.secondary.pointing.menu .active.item {
+    border-color: #FBBD08;
+}
+
+.ui.secondary.filter {
+    padding: 8px 10px;
+    -moz-box-shadow: 0 0 14px -8px #000;
+    -webkit-box-shadow: 0 0 14px -8px #000;
+    box-shadow: 0 0 14px -8px #000;
+    background-color: #fff;
+}
+.ui.secondary.filter .ui.button {
+    padding: 10px 15px;
+}
+.ui.yellow.button:hover, .ui.yellow.buttons .button:hover {
+    background-color: #eaae00;
+    color: #FFF;
+    text-shadow: none;
+}
+.ui.yellow.button {
+    box-shadow: 0 0 0 0 rgba(34,36,38,.15) inset;
+}
+.ui.secondary.filter .change.view .active {
+    color: #FBBD08;
+}
+
+.ui.secondary.filter .change.view {
+    font-size: 16px;
+    margin: 6px 0 0 0;
+}
+
+.ui.secondary.filter label {
+    padding: 6px 10px 0 0px;
+}
+
+.ui.secondary.filter .ui.dropdown {
+    margin-right: 8px;
+}
+
+i.icon {
+    display: inline-block;
+    opacity: 1;
+    margin: 0 .25rem 0 0;
+    width: 1.18em;
+    height: 1em;
+    font-family: Icons;
+    font-style: normal;
+    font-weight: 400;
+    text-decoration: inherit;
+    text-align: center;
+    speak: none;
+    font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+i.icon.filter:before {
+    content: "\f0b0";
+}
+i.icon:before {
+    background: 0 0!important;
+}
+*, :after, :before {
+    box-sizing: inherit;
+}
+.ui.selection.dropdown:hover {
+    border-color: #eaae00;
+    box-shadow: none;
+}
+
+

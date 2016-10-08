@@ -18,10 +18,10 @@
 <div class="main ui container fluid haystaxs">
 	<div class="top fluid left floated"><a class="logo" href="{{ url_for('pp.index') }}"></a>
 		<div class="right floated">
-			<nav class="left floated"><a href="" class="active">Dashboard</a> <a href="">View</a> <a href="">Analyze</a>
+			<nav class="left floated"><a href="{{ url_for('pp.dashboard') }}" class="active">Dashboard</a> <a href="">View</a> <a href="">Analyze</a>
 				<a href="{{ url_for('pp.visualize', workload_id=54) }}">Visualize</a></nav>
 			<div class="default-cluster left floated">
-				<label class="left floated" style="color: #7fff00">Active Cluster</label>
+				<label class="left floated">Active Cluster</label>
 				<select class="ui dropdown left floated" id="active-cluster">
 					{% for c in g.user_clusters %}
 					<option value="{{ c.cluster_id }}" {% if session['active_cluster_id']|int == c.cluster_id %}selected{% endif %}>{{ c.friendly_name }}</option>

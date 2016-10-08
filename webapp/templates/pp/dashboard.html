@@ -1,7 +1,7 @@
 {% extends 'pp/_layout.html' %}
 {% block page_main_filter %}
-<div class="fluid left floated clearfix ui tabular menu sub filter">
-	<label class="left floated">Graph Filters</label>
+<div class="fluid ui secondary filter left floated">
+	<label class="left floated"><i class="filter icon"></i>Graph Filters</label>
 	<select class="ui dropdown left floated" id="timespan-filter">
 		<option value="ALL">ALL</option>
 		<option value="12hr">Last 12 Hours</option>
@@ -23,7 +23,9 @@
 		{% endfor %}
 	</select>
 	<button class="button submit yellow left floated">Apply</button>
-	<div class="right floated change view"><a class="grid active"></a> <a class="list"></a></div>
+	 <div class="right floated change view"><a href="" class="active">
+		 <i class="block layout icon"></i></a><a href=""><i class="list layout icon black"></i></a>
+	 </div>
 </div>
 {% endblock %}
 {% block page_content %}
@@ -44,6 +46,10 @@
 				<div class="column">
 					<div class="head clearfix">
 						<h2 class="left floated">Query Load (Counts)</h2>
+						<select class="ui dropdown">
+							<option>Averages</option>
+							<option>Sum</option>
+						</select>
 					</div>
 					<div class="content">
 						<div style="height: 330px" id="querylog-count-chart"></div>
