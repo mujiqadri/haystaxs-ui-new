@@ -223,7 +223,7 @@ body {
   padding-left: 38px;
   height: 40px;
   line-height: 40px;
-  font-family: "SFCompactText-Semibold";
+  font-weight: 900;
 }
 .haystaxs > .top .user-nav .user .dropdown {
   position: absolute;
@@ -412,7 +412,7 @@ body {
 .haystaxs .page.sidebar > .container .head h3 {
   font-size: 15px;
   font-size: 0.9375rem;
-  font-family: "SFCompactText-Semibold";
+  font-weight: 900;
 }
 .haystaxs .page.sidebar .ui.table {
   margin: 0;
@@ -469,7 +469,7 @@ body {
 .haystaxs .page.sidebar .header {
   background-color: #FBBD08;
   color: #000;
-  font-family: "SFCompactText-Semibold";
+  font-weight: 900;
   padding: 8px 0 0 0;
   font-size: 11px;
   position: relative;
