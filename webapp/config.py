@@ -3,7 +3,7 @@ import os, configparser
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 ini = configparser.ConfigParser()
-ini.read(os.path.join(basedir,  'config.ini'))
+ini.read(os.path.join(basedir, 'config.ini'))
 
 
 class _ConfigBase:
@@ -22,17 +22,20 @@ class _ConfigBase:
     HOST = None
     SECRET_KEY = "Hs-Sk-321$765*"
 
+
 class _DevConfig(_ConfigBase):
     # HOST = "0.0.0.0"
     PORT = 5001
     DEBUG = True
-    #TEMPLATES_AUTO_RELOAD = True
-    #EXPLAIN_TEMPLATE_LOADING = True
+    # TEMPLATES_AUTO_RELOAD = True
+    # EXPLAIN_TEMPLATE_LOADING = True
     SQLALCHEMY_DATABASE_URI = ini['DEV']['DB URL']
     SQLALCHEMY_ECHO = False
 
+
 class _ProdConfig(_ConfigBase):
     SQLALCHEMY_DATABASE_URI = ini['PROD']['DB URL']
+
 
 _configs = {
     'DEV': _DevConfig(),
