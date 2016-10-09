@@ -787,7 +787,6 @@ function hourlyQueriesComparisonSqlWindowOp_Change() {
 
 $(function () {
     maxDateWithTimeZone = new Date();
-    alert("");
     initQueryLogDurationChart(null);
     initQueryLogCountChart(null);
     initHourlyQueriesChart(null);

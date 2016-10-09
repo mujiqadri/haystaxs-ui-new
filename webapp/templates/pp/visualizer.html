@@ -3,7 +3,10 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-powertip/1.2.0/css/jquery.powertip.css">
 {% endblock %}
 {% block page_main_filter %}
-<div class="fluid ui tabular menu sub left floated"><a class="item active">Visual</a> <a class="item">Recommendations</a></div>
+<div class="fluid ui pointing secondary menu">
+    <a class="item active" data-tab="second">Visual</a>
+    <a class="item" data-tab="third">Recommendations</a>
+</div>
 {% endblock %}
 {% block page_content %}
 <div class="fluid ui content container clearfix">
@@ -94,13 +97,11 @@
                     </tbody>
                 </table>
             </div>
-        </section>
-	<section class="fluid content outer">
-		<div class="fluid content container">
-			<div class="row grid">
-				<div class="one column holder">
-					<div class="column visualizer">
-						<div class="head clearfix">
+    </section>
+	<div class="fluid content outer">
+		<div class="ui one column grid">
+                <div class="column">
+                    <div class="head left floated fluid">
 							<h2 class="chart left floated">Showing 19 of 24 tables</h2>
 							<select class="ui dropdown left floated">
 								<option>Cluster 01</option>
@@ -126,31 +127,37 @@
 								<option>Cluster 05</option>
 								<option>Cluster 06</option>
 							</select>
-							<button class="button submit yellow left floated">Apply</button>
-							<div class="display left floated">
-								<label class="left floated">Display by:</label>
-								<div class="item radio left floated">
-									<input type="radio" checked="checked" name="display" id="radioscore">
-									<label for="radioscore" class="radio">Score</label>
-								</div>
-								<div class="item radio left floated">
-									<input type="radio" name="display" id="radiosize">
-									<label for="radiosize" class="radio">Size</label>
-								</div>
-								<div class="item radio left floated">
-									<input type="radio" name="display" id="radiotime">
-									<label for="radiotime" class="radio">Time</label>
-								</div>
-							</div>
+                            <button class="ui button yellow left floated">Apply</button>
+							<div class="ui form left floated">
+                                <div class="inline fields">
+								    <label>Display by:</label>
+								    <div class="field">
+                                        <div class="ui radio checkbox">
+                                             <input type="radio" name="display" checked="checked">
+									        <label>Score</label>
+								        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+                                            <input type="radio" name="display" id="radiosize">
+                                            <label>Size</label>
+                                        </div>
+                                    </div>
+                                    <div class="field">
+                                        <div class="ui radio checkbox">
+									        <input type="radio" name="display" id="radiotime">
+									        <label>Time</label>
+								        </div>
+                                    </div>
+							    </div>
+                            </div>
 							<a class="expand right floated"> </a></div>
 						<div class="content">
 							<div id="canvas-holder"></div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	</section>
+        </div>
 </div>
 {% endblock %}
 {% block page_js %}
