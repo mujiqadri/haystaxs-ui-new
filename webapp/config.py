@@ -1,6 +1,11 @@
+import configparser
 import os
 
-# basedir = os.path.abspath(os.path.dirname(__file__))
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+ini = configparser.ConfigParser()
+ini.read(os.path.join(basedir,  'config.ini'))
+
 
 class _ConfigBase:
     ###############################
@@ -24,16 +29,15 @@ class _DevConfig(_ConfigBase):
     DEBUG = True
     #TEMPLATES_AUTO_RELOAD = True
     #EXPLAIN_TEMPLATE_LOADING = True
-    SQLALCHEMY_DATABASE_URI = 'postgresql://postgres:sa123$@localhost:5432/haystaxs'
-    # SQLALCHEMY_DATABASE_URI = 'postgresql://gpadmin:S3cr3t!@24.150.86.245:5432/haystack'
+    SQLALCHEMY_DATABASE_URI = ini['DEV']['DB URL']
     SQLALCHEMY_ECHO = False
 
 class _ProdConfig(_ConfigBase):
-    SQLALCHEMY_DATABASE_URI = 'postgresql://gpadmin:S3cr3t!@192.168.1.240:5432/haystack'
+    SQLALCHEMY_DATABASE_URI = ''
 
 _configs = {
-    'Dev': _DevConfig(),
-    'Prod': _ProdConfig()
+    'DEV': _DevConfig(),
+    'PROD': _ProdConfig()
 }
 
 _ENVAR_HAYSTAXS_CONFIG = 'HAYSTAXS_CONFIG'

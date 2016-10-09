@@ -1,94 +1,95 @@
 {% extends 'pp/_layout.html' %}
 {% block page_main_filter %}
-<div class="fluid ui secondary filter left floated">
-	<label class="left floated"><i class="filter icon"></i>Graph Filters</label>
-	<select class="ui dropdown left floated" id="timespan-filter">
-		<option value="ALL">ALL</option>
-		<option value="12hr">Last 12 Hours</option>
-		<option value="24hr">Last 24 Hours</option>
-		<option value="1w">Last Week</option>
-		<option value="2w">Last 2 Weeks</option>
-		<option value="1m">Last Month</option>
-		<option value="3m">Last Quarter</option>
-		<option value="12m">Last 12 Months</option>
-	</select>
-	<select class="ui dropdown left floated" id="dbname-like-filter">
-		{% for dbname in db_names %}
-		<option value="{{dbname}}">{{dbname}}</option>
-		{% endfor %}
-	</select>
-	<select class="ui dropdown left floated" id="username-like-filter">
-		{% for username in user_names %}
-		<option value="{{username}}">{{username}}</option>
-		{% endfor %}
-	</select>
-	<button class="button submit yellow left floated">Apply</button>
-	 <div class="right floated change view"><a href="" class="active">
-		 <i class="block layout icon"></i></a><a href=""><i class="list layout icon black"></i></a>
-	 </div>
-</div>
+
+	<div class="fluid ui secondary filter left floated">
+		<label class="left floated"><i class="filter icon"></i>Graph Filters</label>
+		<select class="ui dropdown left floated" id="timespan-filter">
+			<option value="ALL">ALL</option>
+			<option value="12hr">Last 12 Hours</option>
+			<option value="24hr">Last 24 Hours</option>
+			<option value="1w">Last Week</option>
+			<option value="2w">Last 2 Weeks</option>
+			<option value="1m">Last Month</option>
+			<option value="3m">Last Quarter</option>
+			<option value="12m">Last 12 Months</option>
+		</select>
+		<select class="ui dropdown left floated" id="dbname-like-filter">
+			{% for dbname in db_names %}
+			<option value="{{dbname}}">{{dbname}}</option>
+			{% endfor %}
+		</select>
+		<select class="ui dropdown left floated" id="username-like-filter">
+			{% for username in user_names %}
+			<option value="{{username}}">{{username}}</option>
+			{% endfor %}
+		</select>
+		 <button class="ui button yellow">Apply</button>
+		 <div class="right floated change view">
+			<a href="" class="active">
+				<i class="block layout icon">
+				</i>
+			</a>
+			<a href=""><i class="list layout icon black"></i>
+			</a>
+		</div>
+	</div>
+
 {% endblock %}
 {% block page_content %}
-<div class="fluid ui content container expand-content clearfix">
-	<section class="fluid content container clearfix">
-		<div class="row grid">
-			<div class="two column holder">
-				<div class="column">
-					<div class="head clearfix">
-						<h2 class="left floated">Query Load (Duration)</h2>
+    <div class="fluid ui container content clearfix">
+        <div class="fluid container">
+            <div class="ui grid">
+				<div class="two column row">
+                	<div class="column">
+                        <div class="head left floated fluid">
+							<h2 class="left floated">Query Load (Duration)</h2>
+						</div>
+						<div class="content clearfix">
+							<div style="height: 330px" id="querylog-duration-chart"></div>
+						</div>
 					</div>
-					<div class="content">
-						<div style="height: 330px" id="querylog-duration-chart"></div>
-					</div>
-				</div>
-			</div>
-			<div class="two column holder">
-				<div class="column">
-					<div class="head clearfix">
-						<h2 class="left floated">Query Load (Counts)</h2>
-						<select class="ui dropdown">
-							<option>Averages</option>
-							<option>Sum</option>
-						</select>
-					</div>
-					<div class="content">
-						<div style="height: 330px" id="querylog-count-chart"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row grid">
-			<div class="two column holder">
-				<div class="column">
-					<div class="head clearfix">
-						<h2 class="left floated">Queries - Hourly </h2>
-						<select class="ui dropdown">
-							<option>Averages</option>
-							<option>Sum</option>
-						</select>
-					</div>
-					<div class="content">
-						<div style="height: 330px" id="hourly-queries-chart"></div>
+					<div class="column">
+                        <div class="head left floated fluid">
+							<h2 class="left floated">Query Load (Counts)</h2>
+							 <select class="ui dropdown right floated">
+								<option>Averages</option>
+								<option>Sum</option>
+							</select>
+						</div>
+						<div class="content clearfix">
+                            <div style="height: 330px" id="querylog-count-chart"></div>
+                        </div>
 					</div>
 				</div>
-			</div>
-			<div class="two column holder">
-				<div class="column">
-					<div class="head clearfix">
-						<h2 class="left floated">Queries - Hourly Comparison</h2>
-						<select class="ui dropdown">
-							<option>Averages</option>
-							<option>Sum</option>
-						</select>
+				<div class="two column row">
+					<div class="column">
+						 <div class="head left floated fluid">
+							<h2 class="left floated">Queries - Hourly </h2>
+							 <select class="ui dropdown right floated">
+								<option>Averages</option>
+								<option>Sum</option>
+							</select>
+						</div>
+						 <div class="content clearfix">
+							<div style="height: 330px" id="hourly-queries-chart"></div>
+						</div>
 					</div>
-					<div class="content">
-						<div style="height: 330px" id="hourly-queries-comparison-chart"></div>
+					<div class="column">
+						<div class="head left floated fluid">
+							<h2 class="left floated">Queries - Hourly Comparison</h2>
+							 <select class="ui dropdown right floated">
+								<option>Averages</option>
+								<option>Sum</option>
+							</select>
+						</div>
+						<div class="content clearfix">
+							<div style="height: 330px" id="hourly-queries-comparison-chart"></div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
-</div>
+	</div>
 {% endblock %}
 {% block page_js %}
 <!-- BEGIN PAGE LEVEL PLUGINS -->
