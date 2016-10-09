@@ -1,5 +1,4 @@
-import configparser
-import os
+import configparser, os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -21,7 +20,7 @@ class _ConfigBase:
     ### Flask Configs           ###
     ###############################
     HOST = None
-    SECRET_KEY = "secret key for session usage"
+    SECRET_KEY = "Hs-Sk-321$765*"
 
 class _DevConfig(_ConfigBase):
     # HOST = "0.0.0.0"
@@ -33,7 +32,7 @@ class _DevConfig(_ConfigBase):
     SQLALCHEMY_ECHO = False
 
 class _ProdConfig(_ConfigBase):
-    SQLALCHEMY_DATABASE_URI = ''
+    SQLALCHEMY_DATABASE_URI = ini['PROD']['DB URL']
 
 _configs = {
     'DEV': _DevConfig(),
