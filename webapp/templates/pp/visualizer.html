@@ -1,25 +1,22 @@
 {% extends 'pp/_layout.html' %}
 {% block page_css %}
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-powertip/1.2.0/css/jquery.powertip.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-powertip/1.2.0/css/jquery.powertip.css">
 {% endblock %}
 {% block page_main_filter %}
 <div class="fluid ui pointing secondary menu">
+
     <a class="item active" data-tab="second">Visual</a>
     <a class="item" data-tab="third">Recommendations</a>
+
 </div>
 {% endblock %}
 {% block page_content %}
 <div class="fluid ui content container clearfix">
 	<section class="page sidebar right floated">
             <div class="header">
-                <label>Table info for</label>
-                <select class="ui dropdown fluid">
-                    <option>Cluster 01</option>
-                    <option>Cluster 02</option>
-                    <option>Cluster 03</option>
-                    <option>Cluster 04</option>
-                    <option>Cluster 05</option>
-                    <option>Cluster 06</option>
+                <span class="bold">Table Info for: <label id="selected-table-label"></label></span>
+                <select id="table-select" class="ui dropdown fluid">
                 </select>
                 <div class="collapse-btn"></div>
             </div>
@@ -31,151 +28,143 @@
                     <a class="item" data-tab="fourth"><i class="columns icon"></i></a>
                 </div>
 
-                <table class="ui table">
+                <table id="summary-grid" class="ui table">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Value</th>
+                        <th data-column-id="name">Name</th>
+                        <th data-column-id="value">Value</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Skew</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>Skew</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>Skew</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>Skew</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>Skew</td>
-                        <td>0</td>
-                    </tr>
+
                     </tbody>
                 </table>
             </div>
-            <div class="container">
+            <div class="container" id="dk-info-panel">
                 <div class="head">
                     <h3>Distribution Keys</h3>
                 </div>
-                <table class="ui table">
+                <table id="dk-info-grid" class="ui table">
                     <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Usage Freq</th>
+                        <th data-column-id="name">Name</th>
+                        <th data-column-id="usage-freq">Usage Freq</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Skew</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>Skew</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>Skew</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>Skew</td>
-                        <td>0</td>
-                    </tr>
-                    <tr>
-                        <td>Skew</td>
-                        <td>0</td>
-                    </tr>
+
                     </tbody>
                 </table>
             </div>
     </section>
 	<div class="fluid content outer">
 		<div class="ui one column grid">
-                <div class="column">
-                    <div class="head left floated fluid">
-							<h2 class="chart left floated">Showing 19 of 24 tables</h2>
-							<select class="ui dropdown left floated">
-								<option>Cluster 01</option>
-								<option>Cluster 02</option>
-								<option>Cluster 03</option>
-								<option>Cluster 04</option>
-								<option>Cluster 05</option>
-								<option>Cluster 06</option>
-							</select>
-							<select class="ui dropdown left floated">
-								<option>Cluster 01</option>
-								<option>Cluster 02</option>
-								<option>Cluster 03</option>
-								<option>Cluster 04</option>
-								<option>Cluster 05</option>
-								<option>Cluster 06</option>
-							</select>
-							<select class="ui dropdown left floated">
-								<option>Cluster 01</option>
-								<option>Cluster 02</option>
-								<option>Cluster 03</option>
-								<option>Cluster 04</option>
-								<option>Cluster 05</option>
-								<option>Cluster 06</option>
-							</select>
-                            <button class="ui button yellow left floated">Apply</button>
-							<div class="ui form left floated">
-                                <div class="inline fields">
-								    <label>Display by:</label>
-								    <div class="field">
-                                        <div class="ui radio checkbox">
-                                             <input type="radio" name="display" checked="checked">
-									        <label>Score</label>
-								        </div>
+            <div class="column">
+                <div class="head left floated fluid">
+				    <h2 class="chart left floated">Filter by:</h2>
+                    <select id="schema-select" class="ui dropdown left floated">
+					    <option value="HS_ALL_SCHEMAS">ALL_SCHEMAS</option>
+                    </select>
+
+                    <input id="tables-to-display" type="number"
+                        class="ui dropdown left floated"
+                        data-toggle="tooltip" data-placement="bottom"
+                        title="No. of tables to display"/>
+
+                    <input id="display-based-on-filter" type="number"
+                        class="ui dropdown left floated" value="0"
+                        data-toggle="tooltip" title="score greater than"
+                        data-placement="bottom"/>
+
+                    <input id="display-based-on-join-filter" type="number"
+					    class="ui dropdown left floated" value="0"
+                        data-toggle="tooltip" title="join greater than"
+                        data-placement="bottom"/>
+
+                    <button id="apply-filters" class="ui button yellow left floated">Apply</button>
+                    <div class="ui form left floated">
+                        <div class="inline fields">
+						    <label>Display by:</label>
+							    <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="display-according-to" checked="checked">
+									    <label>Score</label>
                                     </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-                                            <input type="radio" name="display" id="radiosize">
-                                            <label>Size</label>
-                                        </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="display-according-to" id="radiosize">
+                                        <label>Size</label>
                                     </div>
-                                    <div class="field">
-                                        <div class="ui radio checkbox">
-									        <input type="radio" name="display" id="radiotime">
-									        <label>Time</label>
-								        </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+									    <input type="radio" name="display-according-to" id="radiotime">
+									    <label>Time</label>
                                     </div>
-							    </div>
+                                </div>
                             </div>
-							<a class="expand right floated"> </a></div>
-						<div class="content">
-							<div id="canvas-holder"></div>
-						</div>
-					</div>
-				</div>
+                        </div>
+						<a class="expand right floated"> </a>
+                    </div>
+                    <div class="tools">
+                        <a href="" class="fullscreen" data-original-title="" title=""> </a>
+                    </div>
+                    <!--<div class="content">
+					    <div id="canvas-holder"></div>
+					</div>-->
+            </div>
+            <div class="content" id="cluster-visual-portlet-body">
+			    <div id="canvas-holder"></div>
+            </div>
         </div>
+
+        <!-- RECOMMENDATIONS TAB -->
+        <div class="tab-pane fade" id="tab_1_2">
+		    <table class="table table-bordered">
+			    <thead>
+				    <tr>
+					    <th style="width: 15%">Table Name</th>
+						<th style="width: 15%">Recommendation Type</th>
+						<th style="width: 30%">Description</th>
+						<th style="width: 30%">Anomaly</th>
+                    </tr>
+                </thead>
+				<tbody id="recommendation-table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 {% endblock %}
 {% block page_js %}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-powertip/1.2.0/jquery.powertip.min.js" type="text/javascript"></script>
-<script src="{{ url_for('static', filename='javascripts/workload-datamodel.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='assets/global/plugins/jquery-ui-1.11.4.dialog-only/jquery-ui.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='assets/global/plugins/jquery.dialogextend.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='assets/global/plugins/select2/js/select2.min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='bower_components/sprintf/src/sprintf.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='bower_components/underscore/underscore-min.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='bower_components/string/dist/string.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='bower_components/d3/d3.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='vendor/jquery.bootgrid.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='vendor/jquery.powertip-1.2.0/jquery.powertip.min.js') }}" type="text/javascript"></script>
+
+
+<script src="{{ url_for('static', filename='javascripts/utility.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='javascripts/dataModel.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='javascripts/visualizer.js') }}" type="text/javascript"></script>
+<script src="{{ url_for('static', filename='javascripts/uiElements.js') }}" type="text/javascript"></script>
+
 <script type="text/javascript">
+    UIElements.initialize();
+    //initializeFullScreenOptions();
+
 	/// GLOBAL VARIABLES ///
 	var dataModel = undefined;
 	var WORKLOAD_JSON_URL = "{{ url_for('api.workload_json', workload_id=active_workload_id) }}"
 
 	loadViaAjax(WORKLOAD_JSON_URL, null, "json", null, null, null, function (result) {
 		dataModel = new Haystaxs.DataModel(result);
-		dataModel.initialize();
-		dataModel.applyFiltersAndDisplayOptions();
-		Visualizer.updateLayout(dataModel);
+		dataLoadSuccessful();
 	});
 </script>
 {% endblock %}

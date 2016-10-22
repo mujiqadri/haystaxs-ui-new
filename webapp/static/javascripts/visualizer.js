@@ -1,12 +1,12 @@
 /**
  * Created by Adnan on 8/24/2015.
  */
-var visualizerOriginalHeight = 745;
+var visualizerOriginalHeight = 575;
 
 var Visualizer = {
     /// GLOBALS ///
     //height = 755, width = 1360;
-    width: 1590,
+    width: 948,
     height: visualizerOriginalHeight,
     nodeMinRadius: 20,
     nodeMaxRadius: 75,
@@ -14,6 +14,8 @@ var Visualizer = {
     forceLayout: null,
 
     updateLayout: function (dataModel) {
+       // alert(dataModel.nodes )
+       // alert(dataModel.links )
         // The self is not actually needed here as the object itself is a singleton defined in the global scope by
         // the name of Visualizer
         var self = this;
@@ -122,6 +124,7 @@ var Visualizer = {
         var flDrag = fLayout.drag()
             .on("dragstart", function (d) {
                 nodeIsBeingDragged = true;
+                d3.select(this).classed("fixed", d.fixed = true);
             })
             .on("dragend", function (d) {
                 //console.log("Drag End");
@@ -129,13 +132,20 @@ var Visualizer = {
                 d3.event.sourceEvent.stopPropagation();
             });
 
-        var visLinks = null, visNodes = null, visCircle = null, visTitle = null, visInfoIcon = null;
+        var visLine = null,linkText = null,visLinks = null, visNodes = null, visCircle = null, visTitle = null, visInfoIcon = null;
 
         /// Create the Visual links ///
-        visLinks = svg.selectAll(".link")
+
+        /// Join Score ///
+
+        visLine = svg.selectAll(".link-line")
             .data(dataModel.links, uniqueID)
             .enter()
-            .append("line")
+            .append("g")
+            .classed("link-line", true)
+
+
+        visLinks = visLine.append("line")
             .classed("link", true)
             .attr({
                 x1: function (d) {
@@ -160,10 +170,33 @@ var Visualizer = {
             .on("mouseover", function (d) {
                 //console.log("Mouseover link", d);
             });
+
+        // create a link lable
+        linkText = visLine.append("text")
+            .attr("class", "link-label")
+            .attr("font-family", "Arial, Helvetica, sans-serif")
+            .attr("fill", "Black")
+            .style("font", "normal 12px Arial")
+
+            .attr("dy", ".35em")
+            .attr("text-anchor", "inherit")
+            .text(function(d) {
+                return d.baseJoin["Join Usage Score"];
+            })
+            .style("cursor", "hand");
+
+        linkText
+            .attr("x", function(d) {
+                return ((d.source.x + d.target.x)/2);
+            })
+            .attr("y", function(d) {
+                return ((d.source.y + d.target.y)/2);
+            });
+
         //.style("display", "none");
 
         /// Create the Visual Nodes ///
-        visNodes = svg.selectAll("g")
+        visNodes = svg.selectAll(".node")
             .data(dataModel.nodes, uniqueID)
             .enter()
             .append("g")
@@ -196,7 +229,7 @@ var Visualizer = {
                 },
                 "stroke-width": 1.5
             })
-            .style("cursor", "hand");
+
 
         /// Node Names ///
         visTitle = visNodes.append("text")
@@ -282,7 +315,7 @@ var Visualizer = {
         }
 
         /// The tick function ///
-        function tick() {
+        function tick(e) {
             tickCount++;
 
             try {
@@ -307,6 +340,16 @@ var Visualizer = {
                         return (str);
                     });
 
+//                var k = .1 * e.alpha;
+//                var foci = [{x: 0, y: 150}, {x: 200, y: 150}];
+//                // Push nodes toward their designated focus.
+//                dataModel.nodes.forEach(function(o, i) {
+//                    if( o.baseTable.joins.length === 0) {
+//                        o.y += (foci[o.baseTable.joins.length].y - o.y) * k;
+//                        o.x += (foci[o.baseTable.joins.length].x - o.x) * k;
+//                    }
+//                });
+
                 if (visLinks) {
                     visLinks.attr(
                         {
@@ -328,6 +371,15 @@ var Visualizer = {
                             }
                         }
                     );
+
+                    linkText
+                        .attr("x", function(d) {
+                            return ((d.source.x + d.target.x)/2);
+                        })
+                        .attr("y", function(d) {
+                            return ((d.source.y + d.target.y)/2);
+                        });
+
                 }
             }
             catch (ex) {
@@ -400,8 +452,17 @@ var Visualizer = {
             var linksToThisNode = dataModel.linksToNode(d);
             var nodesLinkedToThisNode = dataModel.nodesLinkedToNode(d, true);
 
-            var visLinksToHighLight = svg.selectAll(".link")
+            var visLinksToHighLight = visLine.selectAll(".link ")
                 .data(linksToThisNode, uniqueID);
+
+            var visLinkLabel =  d3.selectAll(".link-label")
+
+            visLinkLabel.style("stroke","black").style("stroke-width",0);
+
+            visLinkLabel.transition().duration(100)
+                .style("opacity", function(o) {
+                    return o.source === d || o.target === d ? 1 : .1;
+                });
 
             visLinksToHighLight
                 .attr("stroke-width", function (d) {
@@ -444,7 +505,7 @@ var Visualizer = {
 
 
             // Keep this links z-index below the node z-index (Jugaar style)
-            svg.selectAll(".link, g")
+            visLine.selectAll(".link, g")
                 .sort(function (a, b) {
                     if ((a instanceof Haystaxs.DataModel.LinkData && b instanceof Haystaxs.DataModel.LinkData) ||
                         (a instanceof Haystaxs.DataModel.NodeData && b instanceof Haystaxs.DataModel.NodeData)) {
@@ -497,6 +558,10 @@ var Visualizer = {
                 .attr("stroke-width", 2)
                 .attr("stroke", dimmedLinkStroke)
                 .attr("stroke-opacity", dimmedLinkStrokeOpacity);
+
+            d3.selectAll(".link-label").style("stroke","grey").style("stroke-width",0);
+            d3.selectAll(".link-label").transition().duration(500)
+                .style("opacity", 1);
 
             svg.selectAll("circle")
                 .attr("opacity", 1);
