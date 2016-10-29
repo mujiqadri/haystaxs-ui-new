@@ -1,7 +1,10 @@
 {% extends 'pp/_layout.html' %}
 {% block page_css %}
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-powertip/1.2.0/css/jquery.powertip.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-powertip/1.2.0/css/jquery.powertip.css">
+    <link href="{{ url_for('static', filename='assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" media="screen, projection"  rel="stylesheet" type="text/css"/>
+    <link href="{{ url_for('static', filename='assets/global/plugins/simple-line-icons/simple-line-icons.min.css') }}" media="screen, projection"  rel="stylesheet" type="text/css"/>
+    <!--<link href="{{ url_for('static', filename='assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" media="screen, projection"  rel="stylesheet" type="text/css"/>-->
+    <link href="{{ url_for('static', filename='vendor/jquery.bootgrid.css') }}" media="screen, projection"  rel="stylesheet" type="text/css"/>
+    <link href="{{ url_for('static', filename='vendor/jquery.powertip-1.2.0/css/jquery.powertip.min.css') }}" media="screen, projection"  rel="stylesheet" type="text/css"/>
 {% endblock %}
 {% block page_main_filter %}
 <div class="fluid ui pointing secondary menu">
@@ -87,19 +90,19 @@
 						    <label>Display by:</label>
 							    <div class="field">
                                     <div class="ui radio checkbox">
-                                        <input type="radio" name="display-according-to" checked="checked">
+                                        <input type="radio" value="score" name="display-according-to" checked="checked">
 									    <label>Score</label>
                                     </div>
                                 </div>
                                 <div class="field">
                                     <div class="ui radio checkbox">
-                                        <input type="radio" name="display-according-to" id="radiosize">
+                                        <input type="radio" value="size" name="display-according-to" id="radiosize">
                                         <label>Size</label>
                                     </div>
                                 </div>
                                 <div class="field">
                                     <div class="ui radio checkbox">
-									    <input type="radio" name="display-according-to" id="radiotime">
+									    <input type="radio" value="time" name="display-according-to" id="radiotime">
 									    <label>Time</label>
                                     </div>
                                 </div>
@@ -140,6 +143,7 @@
 {% block page_js %}
 <script src="{{ url_for('static', filename='assets/global/plugins/jquery-ui-1.11.4.dialog-only/jquery-ui.min.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='assets/global/plugins/jquery.dialogextend.js') }}" type="text/javascript"></script>
+<!--<script src="{{ url_for('static', filename='assets/global/plugins/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>-->
 <script src="{{ url_for('static', filename='assets/global/plugins/select2/js/select2.min.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='bower_components/sprintf/src/sprintf.js') }}" type="text/javascript"></script>
 <script src="{{ url_for('static', filename='bower_components/underscore/underscore-min.js') }}" type="text/javascript"></script>

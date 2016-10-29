@@ -2,6 +2,7 @@
  * Created by Adnan on 8/26/2015.
  */
 var UIElements = {
+
     schemaSelectDropdown: null,
     numberOfTablesToDisplayTextbox: null,
     displayBasedOnFilterTextbox: null,
@@ -421,17 +422,13 @@ var UIElements = {
         UIElements.displayBasedOnFilterTextbox = $("#display-based-on-filter");
         UIElements.displayBasedOnJoinFilterTextbox = $("#display-based-on-join-filter");
         UIElements.displayAccordingToRadioButton = $("input[name='display-according-to']").on("change", UIElements.onDisplayAccordingToChanged);
-
         UIElements.tableInfoTabs = $("#table-info-tabs a");
-
         UIElements.selectedTableLabel = $("#selected-table-label");
         UIElements.selectedColumnLabel = $("#selected-column-label");
-
         UIElements.dkInfoPanel = $("#dk-info-panel");
         //UIElements.columnAdditionalInfoPanel = $("#column-additional-info-panel");
         UIElements.joinAdditionalInfoPanel = $("#join-additional-info-panel");
         UIElements.partitionAdditionalInfoPanel = $("#partition-additional-info-panel");
-
         UIElements.tableSelectDropdown = $("#table-select");
         UIElements.tableSelectDropdown.change(UIElements.onSelectedTableChanged);
 

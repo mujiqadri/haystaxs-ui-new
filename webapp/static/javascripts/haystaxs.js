@@ -111,9 +111,10 @@ function setFiltersAndDisplayOptions() {
     dataModel.filters.greaterThan = parseFloat(UIElements.displayBasedOnFilterTextbox.val());
     dataModel.filters.greaterThanJoin = parseFloat(UIElements.displayBasedOnJoinFilterTextbox.val());
     //dataModel.display.accordingTo = UIElements.displayAccordingToRadioButton.val();
-//    dataModel.display.accordingTo = $("input[name='display-according-to']:checked").val();
+    dataModel.display.accordingTo = $("input[name='display-according-to']:checked").val();
 }
 function applyFilters() {
+
     setFiltersAndDisplayOptions();
     dataModel.applyFiltersAndDisplayOptions();
     UIElements.refresh();
@@ -121,11 +122,10 @@ function applyFilters() {
 }
 
 /// CODE TO RUN ON DOCUMENT LOAD ///
-$(function () {
-
-});
+$(function () {});
 
 function initializeToolWindow() {
+
     $('#info-panel-container').dialog({
         closeOnEscape: false,
         dialogClass: 'above-all-else',
