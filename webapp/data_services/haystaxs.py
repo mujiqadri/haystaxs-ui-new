@@ -37,3 +37,11 @@ def get_workload_json(workload_id):
         result = cursor.fetchone()[0]
 
     return result
+
+
+def get_lastn_workloads(gpsdId):
+    with get_connection_hs_schema() as conn:
+        sql = "select wl.* from workloads wl where wl.cluster_id = {0} order BY workload_id DESC".format(gpsdId)
+        cursor = conn.execute(sql)
+        workloads = [w for w in cursor]
+    return workloads

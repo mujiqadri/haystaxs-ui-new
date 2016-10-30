@@ -22,7 +22,8 @@
 	<div class="top fluid left floated"><a class="logo" href="{{ url_for('pp.index') }}"></a>
 		<div class="right floated">
 			<nav class="left floated"><a href="{{ url_for('pp.dashboard') }}" class="active">Dashboard</a> <a href="">View</a> <a href="">Analyze</a>
-				<a href="{{ url_for('pp.visualize', workload_id=54) }}">Visualize</a>
+				<a href="{{ url_for('api.workloads_list')}}"> Visualize</a>
+                <!--a href="{{ url_for('pp.visualize', workload_id=54) }}">Visualize</a>-->
 			</nav>
 			<div class="default-cluster left floated">
 				<label class="left floated">Active Cluster</label>
