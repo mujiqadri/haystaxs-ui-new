@@ -6,7 +6,7 @@ var visualizerOriginalHeight = 575;
 var Visualizer = {
     /// GLOBALS ///
     //height = 755, width = 1360;
-    width: 948,
+    width: 1590,
     height: visualizerOriginalHeight,
     nodeMinRadius: 20,
     nodeMaxRadius: 75,
