@@ -605,7 +605,7 @@ function initHourlyComparisonQueriesChart(data) {
         });
 
         // TODO: Compute previous timeline
-        var timespanSelectedValue = $('#timespan').val();
+        var timespanSelectedValue = $('#timespan-filter').val();
         var comparisonExists = true;
         var mdmMax = new moment(maxDateWithTimeZone);
         var mdmMin;
@@ -650,7 +650,7 @@ function initHourlyComparisonQueriesChart(data) {
                 break;
         }
         if (comparisonExists) {
-            data = dataForAjax(mdmMin.format("DD-MMM-YYYY"), mdmMax.format("DD-MMM-YYYY"), data);
+            data = dataForAjax(mdmMin.format("DD-MMM-YYYY"),mdmMax.format("DD-MMM-YYYY"), data);
             loadViaAjax('/dashboard/ql/hourlyavgchartdata', data, 'json', null, null, null, function (result_2) {
                 /*for (index in rawChartData) {
                  rawChartData[index]["totalDurationPrev"] = result_2[index]["totalDuration"];
@@ -763,9 +763,8 @@ function dataForAjax(minDate, maxDate, data) {
 
     result.fromDate = minDate ? minDate : $('#start-date').val();
     result.toDate = maxDate ? maxDate : $('#end-date').val();
-    result.dbName = $('#db-name-like').val() === "---ANY---" ? "" : $('#db-name-like').val();
-    result.userName = $('#user-name-like').val() === "---ANY---" ? "" : $('#user-name-like').val();
-
+    result.dbName = $('#dbname-like-filter').val()=== "---ANY---" ? "" : $('#dbname-like-filter').val();
+    result.userName = $('#username-like-filter').val() === "---ANY---" ? "" : $('#username-like-filter').val();
     return result;
 }
 
@@ -786,9 +785,22 @@ function hourlyQueriesComparisonSqlWindowOp_Change() {
 }
 
 $(function () {
+
+    $('#filter-chart-data').on('click', function (e) {
+        e.preventDefault();
+		var data = dataForAjax();
+        initQueryLogDurationChart(data);
+        initQueryLogCountChart(data);
+        initHourlyQueriesChart(data);
+        initHourlyComparisonQueriesChart(data);
+
+
+    });
+    alert("llklklk");
     maxDateWithTimeZone = new Date();
-    initQueryLogDurationChart(null);
-    initQueryLogCountChart(null);
-    initHourlyQueriesChart(null);
-    initHourlyComparisonQueriesChart(null);
+    var data = dataForAjax();
+    initQueryLogDurationChart(data);
+    initQueryLogCountChart(data);
+    initHourlyQueriesChart(data);
+    initHourlyComparisonQueriesChart(data);
 });
