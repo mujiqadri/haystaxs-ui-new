@@ -11,23 +11,23 @@ def before_request():
 
 @_apibp.route('/dashboard/chartdata/durationandcounts')
 def dashboard_duration_and_counts_chart_data():
+    from_date = request.args['fromDate']
+    to_date = request.args['toDate']
     user_name = request.args['userName']
     db_name = request.args['dbName']
-    from_date = ""
-    to_date = "";
     active_cluster_id = session['active_cluster_id']
     query_duration_and_count = cd.get_query_stats_for_charts(active_cluster_id,from_date,to_date,db_name,user_name)
     return jsonify(query_duration_and_count)
 
 @_apibp.route('/dashboard/chartdata/hourlydata')
 def dashboard_hourly_chart_data():
-    from_date = ""
-    to_date = "";
-    db_name = ""
-    username = "";
+    from_date = request.args['fromDate']
+    to_date = request.args['toDate']
+    db_name = request.args['dbName']
+    user_name = request.args['userName']
     active_cluster_id = session['active_cluster_id']
-    windowOp = 'avg'
-    hourly_chart_data = cd.get_hourly_query_stats_for_charts(active_cluster_id, from_date, to_date, db_name, username, windowOp)
+    windowOp = request.args['sqlWindowOp']
+    hourly_chart_data = cd.get_hourly_query_stats_for_charts(active_cluster_id, from_date, to_date, db_name, user_name, windowOp)
     return jsonify(hourly_chart_data)
 
 @_apibp.route('/workload-json/<workload_id>')

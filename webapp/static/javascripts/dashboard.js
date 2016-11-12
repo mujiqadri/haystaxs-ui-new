@@ -796,7 +796,47 @@ $(function () {
 
 
     });
-    alert("llklklk");
+
+    $('#timespan-filter').on('change', function (e) {
+            var selectedValue = $(this).val();
+            var startDate = $('#start-date');
+            var endDate = $('#end-date');
+
+            var mdm = new moment(maxDateWithTimeZone);
+
+            if (selectedValue === "ALL") {
+                startDate.val(moment(minDateWithTimeZone).format("DD-MMM-YYYY"));
+                //endDate.val(moment(maxDateWithTimeZone).format("DD-MMM-YYYY"));
+            } else {
+                switch (selectedValue) {
+                    case "12hr":
+                        mdm.subtract(12, 'h');
+                        break;
+                    case "24hr":
+                        mdm.subtract(24, 'h');
+                        break;
+                    case "1w":
+                        mdm.subtract(1, "w");
+                        break;
+                    case "2w":
+                        mdm.subtract(2, "w");
+                        break;
+                    case "1m":
+                        mdm.subtract(1, "M");
+                        break;
+                    case "3m":
+                        mdm.subtract(3, "M");
+                        break;
+                    case "12m":
+                        mdm.subtract(12, "M");
+                        break;
+                }
+
+                startDate.val(mdm.format('DD-MMM-YYYY'));
+                endDate.val(moment(maxDateWithTimeZone).format("DD-MMM-YYYY"));
+            }
+        });
+
     maxDateWithTimeZone = new Date();
     var data = dataForAjax();
     initQueryLogDurationChart(data);

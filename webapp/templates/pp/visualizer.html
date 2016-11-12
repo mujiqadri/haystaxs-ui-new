@@ -3,6 +3,7 @@
     <link href="{{ url_for('static', filename='assets/global/plugins/font-awesome/css/font-awesome.min.css') }}" media="screen, projection"  rel="stylesheet" type="text/css"/>
     <link href="{{ url_for('static', filename='assets/global/plugins/simple-line-icons/simple-line-icons.min.css') }}" media="screen, projection"  rel="stylesheet" type="text/css"/>
     <!--<link href="{{ url_for('static', filename='assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" media="screen, projection"  rel="stylesheet" type="text/css"/>-->
+    <!--<link href="{{ url_for('static', filename='assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}" media="screen, projection"  rel="stylesheet" type="text/css"/>-->
     <link href="{{ url_for('static', filename='vendor/jquery.bootgrid.css') }}" media="screen, projection"  rel="stylesheet" type="text/css"/>
     <link href="{{ url_for('static', filename='vendor/jquery.powertip-1.2.0/css/jquery.powertip.min.css') }}" media="screen, projection"  rel="stylesheet" type="text/css"/>
 {% endblock %}
@@ -36,7 +37,7 @@
             <a class="active item" data-tab="first">Summary</a>
             <a class="item" data-tab="second">Columns</a>
             <a class="item" data-tab="third">Joins</a>
-             <a class="item" data-tab="fourth">Partitions</a>
+            <a class="item" data-tab="fourth">Partitions</a>
         </div>
         <div class="ui bottom attached active tab" data-tab="first">
             <div class="container">
@@ -58,6 +59,7 @@
 
                     </tbody>
                 </table>
+
             </div>
             <div class="container" id="dk-info-panel">
                 <div class="head">
@@ -77,10 +79,30 @@
             </div>
         </div>
         <div class="ui bottom attached tab segment" data-tab="second">
-            Second
+            <table id="columns-grid" class="ui table">
+                <thead>
+                    <tr>
+                        <th data-column-id="name" data-formatter="name" data-width="50%">Name</th>
+                        <th data-column-id="usage-freq" data-order="desc">Score</th>
+                        <th data-column-id="where-usage" data-formatter="whereInfo">Where Info</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
         <div class="ui bottom attached tab segment" data-tab="third">
-            Third
+            <table id="joins-grid" class="ui table">
+                <thead>
+                   <tr>
+                       <th data-column-id="left-table" data-formatter="tableSummary">L. Table</th>
+                       <th data-column-id="right-table" data-formatter="tableSummary">R. Table </th>
+                       <th data-column-id="join-usage-score" data-order="desc"> Score </th>
+                   </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
 
 
