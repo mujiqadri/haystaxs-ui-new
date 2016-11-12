@@ -28,9 +28,14 @@
 			</select>
 			 <button class="ui button yellow" id="filter-chart-data">Apply</button>
 		</form>
-		 <div class="right floated change view">
-			<a href="" class="active">
-				<i class="block layout icon">
+        <input type="hidden" id="start-date" value=""/>
+		<input type="hidden" id="end-date" value=""/>
+		<input type="hidden" id="order-by" value="queryStartTime ASC"/>
+		<input type="hidden" id="current-page-no" value="1"/>
+
+		<div class="right floated change view">
+		    <a href="" class="active">
+			    <i class="block layout icon">
 				</i>
 			</a>
 			<a href=""><i class="list layout icon black"></i>
